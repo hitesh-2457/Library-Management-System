@@ -1,0 +1,15 @@
+.searchBar{
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.searchEle{
+  height: 50px;
+}
+.tableData{
+  width: 110px;
+}
+form{
+  margin-left: 10px;
+  margin-right: 10px;
+}

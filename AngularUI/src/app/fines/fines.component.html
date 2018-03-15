@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-8">
+  </div>
+  <div class="col-md-2 searchBar">
+    <button class="btn btn-success" type="button" (click)="updateFine()">
+      <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+      Update Fines
+    </button>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <div *ngIf="errors.length!=0">
+    <div class="alert alert-error alert-dismissible" role="alert" *ngFor="let err of errors">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="removeError(err)">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>Error!!</strong>{{err}}
+    </div>
+  </div>
+  <table class="table table-striped table-hover" *ngIf="fines.length!=0">
+    <thead>
+      <th>Borrower</th>
+      <th>Books Borrowed</th>
+      <th>Fine</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of fines">
+        <td class="tableData">
+          {{record[0].borrower.bname}}
+          <hr> Card Id: {{record[0].borrower.cardId}}
+        </td>
+        <td>
+          <div *ngFor="let entry of record">
+            <span>{{entry.book.title}}</span>
+          </div>
+        </td>
+        <td class="tableData" [innerHtml]="totFine(record)"> $
+        </td>
+        <td>
+          <button class="btn btn-success" type="button" (click)="showFine(template,record)">
+            Pay Fine
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ng-template #template>
+  <div class="modal-md" role="document">
+    <div class="modal-header">
+      <h4 class="modal-title">Update</h4>
+      <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="alert alert-error alert-dismissible" role="alert" *ngIf="modalError">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="modalError=null;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{modalError}}
+        </div>
+        <form>
+          <div>
+            <table>
+              <thead>
+                <th>Book Title</th>
+                <th>Fine</th>
+                <th></th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let entry of selectedRecord">
+                  <td>{{entry.book.title}}</td>
+                  <td class="tableData">{{entry.fine.fineAmt}}</td>
+                  <td class="tableData">
+                    <button class="btn btn-success" type="button" *ngIf="!entry.book.isCheckedOut" (click)="payFine(entry.fine)">
+                      Pay Fine
+                    </button>
+                    <span *ngIf="entry.book.isCheckedOut"> Book is Checkout </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <button class="btn btn-success" type="button" (click)="payAllFines(selectedRecord[0].borrower)">
+                      Pay All
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,58 @@
+<div *ngIf="errors.length!=0">
+  <div class="alert alert-error alert-dismissible" role="alert" *ngFor="let err of errors">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="removeError(err)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Error!!</strong>{{err}}
+  </div>
+</div>
+<div *ngIf="success.length!=0">
+  <div class="alert alert-success" role="alert">
+    {{success}}
+  </div>
+</div>
+
+<form (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="fname">First Name:</label>
+    <input type="fname" class="form-control" name="fname" placeholder="First Name" [(ngModel)]="user.fname" required>
+  </div>
+
+  <div class="form-group">
+    <label for="lname">Last Name:</label>
+    <input type="lname" class="form-control" name="lname" placeholder="Last Name" [(ngModel)]="user.lname" required>
+  </div>
+
+  <div class="form-group">
+    <label for="ssn">SSN:</label>
+    <input type="number" class="form-control" name="ssn" placeholder="Social Security Number" [(ngModel)]="user.ssn" minlength="9"
+      maxlength="9" required>
+  </div>
+
+  <div class="form-group">
+    <label for="phone">Phone Number:</label>
+    <input type="number" class="form-control" name="phone" placeholder="Phone Number" [(ngModel)]="user.phoneNumber" required>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email Address:</label>
+    <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="user.emailAddress" required email>
+  </div>
+
+  <div class="form-group">
+    <label for="address">Address:</label>
+    <input type="string" class="form-control" name="address" placeholder="Address" [(ngModel)]="user.address" required>
+  </div>
+
+  <div class="form-group">
+    <label for="city">City:</label>
+    <input type="string" class="form-control" name="city" placeholder="City" [(ngModel)]="user.city" required>
+  </div>
+
+  <div class="form-group">
+    <label for="state">State:</label>
+    <input type="string" class="form-control" name="state" placeholder="State" [(ngModel)]="user.state" required>
+  </div>
+
+  <button type="submit" class="btn btn-default" (click)="onSubmit()">Create new</button>
+</form>
